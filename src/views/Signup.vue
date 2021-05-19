@@ -23,14 +23,14 @@
                     placeholder="Contraseña"
                     v-model="usuario.password"
                   />
-                  <button type="submit" class="btn btn-success mt-2">
+                  <button type="submit" class="btn mt-2">
                     Registrarse
                   </button>
                 </div>
               </form>
               <div class="m-2">
                 <span>Ya tienes cuenta? </span>
-                <a href="/">Inicia Sesion</a>
+                <router-link to="/">Inicia Sesion</router-link>
               </div>
               <div class="alert alert-success" v-if="confirmacion">
                 <span>Se ha registrado correctamente!</span>
@@ -60,7 +60,10 @@ export default {
     cargar() {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.usuario.email, this.usuario.password);
+        .createUserWithEmailAndPassword(
+          this.usuario.email,
+          this.usuario.password
+        );
       this.confirmacion = true;
       setTimeout(() => {
         this.confirmacion = false;
@@ -77,6 +80,17 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #000;
-  background: #2c3e50;
+  background-image: url("../assets/background-signup.png");
+  background-size: 100%;
+  background-position: 50% 50%;
+}
+.card {
+  border: 3px solid #A2464A;
+  border-radius: 5px;
+  box-shadow: 0 0 20px #A2464A;
+}
+.btn {
+  background: #A2464A;
+  color: white;
 }
 </style>

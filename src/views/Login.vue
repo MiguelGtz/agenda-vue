@@ -23,14 +23,14 @@
                     placeholder="Contraseña"
                     v-model="usuario.password"
                   />
-                  <button type="submit" class="btn btn-success mt-2">
+                  <button type="submit" class="btn mt-2">
                     Iniciar Sesion
                   </button>
                 </div>
               </form>
               <div class="m-2">
                 <span>Aun no tienes cuenta? </span>
-                <a href="/signup">Registrarse</a>
+                <router-link to="/signup">Registrarse</router-link>
               </div>
             </div>
           </div>
@@ -54,7 +54,9 @@ export default {
   },
   methods: {
     cargar() {
-      firebase.auth().signInWithEmailAndPassword(this.usuario.email, this.usuario.password);
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.usuario.email, this.usuario.password);
     },
   },
 };
@@ -67,6 +69,16 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #000;
-  background: #2c3e50;
+  background-image: url("../assets/background-login.png");
+  background-size: 100%;
+}
+.card {
+  border: 3px solid #d2ac93;
+  border-radius: 5px;
+  box-shadow: 0 0 20px #d2ac93;
+}
+.btn {
+  background: #d2ac93;
+  color: white;
 }
 </style>

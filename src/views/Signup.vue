@@ -34,7 +34,10 @@
                 <span>Ya tienes cuenta? </span>
                 <router-link to="/">Inicia Sesion</router-link>
               </div>
-              <div class="alert alert-danger" v-if="infoError">
+              <div class="alert alert-danger" v-if="infoPassword">
+                <span>La contraseña debe de tener al menos 6 caracteres</span>
+              </div>
+              <div class="alert alert-danger" v-if="infoEmail">
                 <span>Este correo ya ha sido registrado!</span>
               </div>
             </div>
@@ -55,7 +58,8 @@ export default {
         email: "",
         password: "",
       },
-      infoError: false,
+      infoPassword: false,
+      infoEmail: false,
     };
   },
   methods: {
@@ -66,11 +70,18 @@ export default {
           this.usuario.email,
           this.usuario.password
         )
-        .catch(() => {
-          this.infoError = true;
-          setTimeout(() => {
-            this.infoError = false;
-          }, 1000);
+        .catch((error) => {
+          if (error.code == "auth/weak-password") {
+            this.infoPassword = true;
+            setTimeout(() => {
+              this.infoPassword = false;
+            }, 2000);
+          } else {
+            this.infoEmail = true;
+            setTimeout(() => {
+              this.infoEmail = false;
+            }, 2000);
+          }
         });
     },
   },

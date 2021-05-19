@@ -67,7 +67,7 @@ export default {
           this.infoError = true;
           setTimeout(() => {
             this.infoError = false;
-          }, 1000);
+          }, 2000);
         });
     },
   },

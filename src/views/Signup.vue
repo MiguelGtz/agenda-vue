@@ -16,12 +16,14 @@
                     class="form-control mb-2 mt-2"
                     placeholder="Correo"
                     v-model="usuario.email"
+                    required
                   />
                   <input
                     type="password"
                     class="form-control mb-2 mt-2"
                     placeholder="Contraseña"
                     v-model="usuario.password"
+                    required
                   />
                   <button type="submit" class="btn mt-2">
                     Registrarse
@@ -32,8 +34,8 @@
                 <span>Ya tienes cuenta? </span>
                 <router-link to="/">Inicia Sesion</router-link>
               </div>
-              <div class="alert alert-success" v-if="confirmacion">
-                <span>Se ha registrado correctamente!</span>
+              <div class="alert alert-danger" v-if="infoError">
+                <span>Este correo ya ha sido registrado!</span>
               </div>
             </div>
           </div>
@@ -53,7 +55,7 @@ export default {
         email: "",
         password: "",
       },
-      confirmacion: false,
+      infoError: false,
     };
   },
   methods: {
@@ -63,11 +65,13 @@ export default {
         .createUserWithEmailAndPassword(
           this.usuario.email,
           this.usuario.password
-        );
-      this.confirmacion = true;
-      setTimeout(() => {
-        this.confirmacion = false;
-      }, 1000);
+        )
+        .catch(() => {
+          this.infoError = true;
+          setTimeout(() => {
+            this.infoError = false;
+          }, 1000);
+        });
     },
   },
 };
@@ -85,12 +89,12 @@ export default {
   background-position: 50% 50%;
 }
 .card {
-  border: 3px solid #A2464A;
+  border: 3px solid #a2464a;
   border-radius: 5px;
-  box-shadow: 0 0 20px #A2464A;
+  box-shadow: 0 0 20px #a2464a;
 }
 .btn {
-  background: #A2464A;
+  background: #a2464a;
   color: white;
 }
 </style>

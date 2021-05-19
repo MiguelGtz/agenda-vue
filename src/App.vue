@@ -26,8 +26,7 @@ export default {
           router.replace("/");
         }
       } else {
-        const email = firebase.auth().currentUser.email;
-        if (this.arrayDoc.includes(email)) {
+        if (this.arrayDoc.includes(user.email)) {
           if (route.path != "/homed" && route.path != "/consultas") {
             router.replace("/homed");
           }

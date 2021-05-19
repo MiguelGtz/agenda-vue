@@ -16,12 +16,14 @@
                     class="form-control mb-2 mt-2"
                     placeholder="Correo"
                     v-model="usuario.email"
+                    required
                   />
                   <input
                     type="password"
                     class="form-control mb-2 mt-2"
                     placeholder="Contraseña"
                     v-model="usuario.password"
+                    required
                   />
                   <button type="submit" class="btn mt-2">
                     Iniciar Sesion
@@ -31,6 +33,9 @@
               <div class="m-2">
                 <span>Aun no tienes cuenta? </span>
                 <router-link to="/signup">Registrarse</router-link>
+              </div>
+              <div class="alert alert-danger" v-if="infoError">
+                <span>El correo o contraseña no es correcto!</span>
               </div>
             </div>
           </div>
@@ -50,13 +55,20 @@ export default {
         email: "",
         password: "",
       },
+      infoError: false,
     };
   },
   methods: {
     cargar() {
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.usuario.email, this.usuario.password);
+        .signInWithEmailAndPassword(this.usuario.email, this.usuario.password)
+        .catch(() => {
+          this.infoError = true;
+          setTimeout(() => {
+            this.infoError = false;
+          }, 1000);
+        });
     },
   },
 };

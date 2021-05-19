@@ -1,5 +1,5 @@
 <template>
-  <div class="barra mb-3">
+  <div class="barra">
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
         <router-link class="navbar-brand" to=""

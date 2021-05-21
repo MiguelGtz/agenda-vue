@@ -82,7 +82,7 @@ export default {
   text-align: center;
   color: #000;
   background-image: url("../assets/background-login.png");
-  background-size: 100%;
+  background-size: cover;
 }
 .card {
   border: 3px solid #d2ac93;

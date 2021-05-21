@@ -96,8 +96,7 @@ export default {
   text-align: center;
   color: #000;
   background-image: url("../assets/background-signup.png");
-  background-size: 100%;
-  background-position: 50% 50%;
+  background-size: cover;
 }
 .card {
   border: 3px solid #a2464a;

@@ -32,8 +32,7 @@ export default {
 <style scoped>
 .homed {
   background-image: url("../assets/background-homed.png");
-  background-size: 100%;
-  background-position: 50% 50%;
+  background-size: cover;
   height: 100vh;
   display: flex;
   justify-content: center;

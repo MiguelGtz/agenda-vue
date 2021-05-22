@@ -1,6 +1,6 @@
 <template>
-  <Navbarp />
-  <div class="homep">
+  <Navbar />
+  <div class="homed">
     <div class="alert alert-light" role="alert">
       <h1 class="bienvenida">Bienvenido, {{ usuario }}</h1>
     </div>
@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import Navbarp from "../components/Navbarp";
+import Navbar from "../components/Navbar";
 import firebase from "firebase";
 
 export default {
   components: {
-    Navbarp,
+    Navbar,
   },
   created() {
     const user = firebase.auth().currentUser;
@@ -30,8 +30,8 @@ export default {
 </script>
 
 <style scoped>
-.homep {
-  background-image: url("../assets/background-homep.png");
+.homed {
+  background-image: url("../assets/background-homed.png");
   background-size: cover;
   height: 100vh;
   display: flex;

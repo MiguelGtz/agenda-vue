@@ -11,37 +11,15 @@ export default {
     const router = useRouter();
     const route = useRoute();
 
-    firebase
-      .firestore()
-      .collection("Doctores")
-      .onSnapshot((doc) => {
-        doc.forEach((dato) => {
-          this.arrayDoc.push(dato.data().email);
-        });
-      });
-
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         if (route.path != "/" && route.path != "/signup") {
           router.replace("/");
         }
-      } else {
-        if (this.arrayDoc.includes(user.email)) {
-          if (route.path != "/homed" && route.path != "/consultas") {
-            router.replace("/homed");
-          }
-        } else {
-          if (route.path != "/homep" && route.path != "/citas") {
-            router.replace("/homep");
-          }
-        }
+      } else if (route.path != "/home" && route.path != "/consultas") {
+        router.replace("/home");
       }
     });
-  },
-  data() {
-    return {
-      arrayDoc: [],
-    };
   },
 };
 </script>

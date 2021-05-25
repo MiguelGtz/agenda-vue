@@ -16,7 +16,7 @@ export default {
         if (route.path != "/" && route.path != "/signup") {
           router.replace("/");
         }
-      } else if (route.path != "/home" && route.path != "/consultas") {
+      } else if (route.path != "/home" && route.path != "/consultas" && route.path != "/misconsultas") {
         router.replace("/home");
       }
     });

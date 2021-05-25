@@ -8,7 +8,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link class="nav-link" to="/consultas">Consultas</router-link>
+              <router-link class="nav-link" to="/consultas"
+                >Nueva Consulta</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/misconsultas"
+                >Mis Consultas</router-link
+              >
             </li>
           </ul>
           <div class="d-flex">

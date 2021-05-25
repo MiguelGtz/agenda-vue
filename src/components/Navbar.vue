@@ -2,7 +2,7 @@
   <div class="barra">
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
-        <router-link class="navbar-brand" to=""
+        <router-link class="navbar-brand" to="/home"
           ><i class="fas fa-home"></i
         ></router-link>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

@@ -2,7 +2,7 @@
   <Navbar />
   <div class="container bg-light p-3">
     <h1 class="h3 mb-3 font-weight-normal">Agendar Cita</h1>
-    <form @submit.prevent="guardarCita" class="form-signin">
+    <form @submit.prevent="guardarCita" class="form-signin" id="formCita">
       <span>Información Básica</span>
       <input
         maxlength="150"
@@ -64,6 +64,15 @@
       </button>
     </form>
   </div>
+  <div class="container alert alert-success mt-3" v-if="estadoAgregar">
+    <span>Se ha agendado la cita correctamente!</span>
+  </div>
+  <div class="container alert alert-danger mt-3" v-if="estadoErrorFirebase">
+    <span>Hubo un error!</span>
+  </div>
+  <div class="container alert alert-danger mt-3" v-if="estadoErrorExistencia">
+    <span>Medico no disponible en ese horario!</span>
+  </div>
 </template>
 
 <script>
@@ -73,6 +82,22 @@ import firebase from "firebase";
 export default {
   components: {
     Navbar,
+  },
+  created() {
+    firebase
+      .firestore()
+      .collection("Citas")
+      .onSnapshot((coleccion) => {
+        this.arrayTotal = [];
+        coleccion.forEach((doc) => {
+          this.arrayTotal.push({
+            id: doc.id,
+            doctor: doc.data().doctor,
+            fecha: doc.data().fecha,
+            hora: doc.data().hora,
+          });
+        });
+      });
   },
   methods: {
     obtener() {
@@ -92,13 +117,41 @@ export default {
         });
     },
     guardarCita() {
-      firebase
-        .firestore()
-        .collection("Citas")
-        .add(this.cita)
-        .then(() => {
-          location.reload();
-        });
+      let existe = false;
+      for (let i = 0; i < this.arrayTotal.length; i++) {
+        if (
+          this.arrayTotal[i].doctor == this.cita.doctor &&
+          this.arrayTotal[i].fecha == this.cita.fecha &&
+          this.arrayTotal[i].hora == this.cita.hora
+        ) {
+          existe = true;
+          break;
+        }
+      }
+      if (!existe) {
+        firebase
+          .firestore()
+          .collection("Citas")
+          .add(this.cita)
+          .then(() => {
+            this.estadoAgregar = true;
+            setTimeout(() => {
+              this.estadoAgregar = false;
+              this.$router.replace("/misconsultas");
+            }, 2000);
+          })
+          .catch(() => {
+            this.estadoErrorFirebase = true;
+            setTimeout(() => {
+              this.estadoErrorFirebase = false;
+            }, 2000);
+          });
+      } else {
+        this.estadoErrorExistencia = true;
+        setTimeout(() => {
+          this.estadoErrorExistencia = false;
+        }, 2000);
+      }
     },
   },
   data() {
@@ -143,6 +196,7 @@ export default {
       ],
       arrayDoctores: [],
       cita: {
+        correo: firebase.auth().currentUser.email,
         nombre: "",
         edad: "",
         asunto: "",
@@ -151,6 +205,10 @@ export default {
         fecha: "",
         hora: "",
       },
+      estadoAgregar: false,
+      estadoErrorFirebase: false,
+      estadoErrorExistencia: false,
+      arrayTotal: [],
     };
   },
 };

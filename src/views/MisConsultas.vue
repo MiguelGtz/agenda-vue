@@ -46,6 +46,7 @@ export default {
     firebase
       .firestore()
       .collection("Citas")
+      .where("correo","==",firebase.auth().currentUser.email)
       .onSnapshot((coleccion) => {
         this.arrayCitas = [];
         coleccion.forEach((doc) => {

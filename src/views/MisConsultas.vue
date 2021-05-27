@@ -1,9 +1,10 @@
 <template>
   <Navbar />
-  <div class="container bg-light p-3">
+  <div class="container bg-light my-3 p-3" v-if="!estadoDelete">
     <h1 class="h3 mb-3 font-weight-normal">Historial de Citas</h1>
+    <hr />
     <table class="table">
-      <thead>
+      <thead v-if="arrayCitas.length != 0">
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Asunto</th>
@@ -24,13 +25,31 @@
             <button class="btn btn-primary mx-1" @click="editCita(cita.id)">
               <i class="fas fa-edit"></i>
             </button>
-            <button class="btn btn-danger mx-1" @click="deleteCita(cita.id)">
+            <button
+              class="btn btn-danger mx-1"
+              @click="(estadoDelete = true), (idDocumento = cita.id)"
+            >
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
         </tr>
+        <tr class="h4" v-if="arrayCitas.length == 0">
+          <span>No hay citas!</span>
+        </tr>
       </tbody>
     </table>
+  </div>
+  <div class="container alert alert-dark my-3" v-if="estadoDelete">
+    <div><h5>¿Está seguro que desea eliminarlo?</h5></div>
+    <button
+      class="btn btn-danger mx-1"
+      @click="deleteCita(idDocumento), (estadoDelete = false)"
+    >
+      Eliminar
+    </button>
+    <button class="btn btn-primary mx-1" @click="estadoDelete = false">
+      Cancelar
+    </button>
   </div>
 </template>
 
@@ -46,7 +65,7 @@ export default {
     firebase
       .firestore()
       .collection("Citas")
-      .where("correo","==",firebase.auth().currentUser.email)
+      .where("correo", "==", firebase.auth().currentUser.email)
       .onSnapshot((coleccion) => {
         this.arrayCitas = [];
         coleccion.forEach((doc) => {
@@ -63,9 +82,23 @@ export default {
         });
       });
   },
+  methods: {
+    deleteCita(id) {
+      firebase
+        .firestore()
+        .collection("Citas")
+        .doc(id)
+        .delete();
+    },
+    restore() {
+      estadoDelete = false;
+    },
+  },
   data() {
     return {
       arrayCitas: [],
+      idDocumento: "",
+      estadoDelete: false,
     };
   },
 };

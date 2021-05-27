@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div class="container bg-light my-3 p-3" v-if="!estadoDelete">
+  <div class="container bg-light my-3 p-3" v-if="!estadoDelete && !estadoEdit">
     <h1 class="h3 mb-3 font-weight-normal">Historial de Citas</h1>
     <hr />
     <table class="table">
@@ -22,7 +22,10 @@
           <td>{{ cita.fecha }}</td>
           <td>{{ cita.hora }}</td>
           <td>
-            <button class="btn btn-primary mx-1" @click="idDocumento = cita.id">
+            <button
+              class="btn btn-primary mx-1"
+              @click="(estadoEdit = true), (idDocumento = cita.id)"
+            >
               <i class="fas fa-edit"></i>
             </button>
             <button
@@ -39,6 +42,7 @@
       </tbody>
     </table>
   </div>
+  <EditConsulta :idDocumento="idDocumento" v-if="estadoEdit" />
   <div class="container alert alert-dark my-3" v-if="estadoDelete">
     <div><h5>¿Está seguro que desea eliminarlo?</h5></div>
     <button
@@ -51,15 +55,24 @@
       Cancelar
     </button>
   </div>
+  <button
+    class="container btn btn-danger mx-1"
+    @click="(estadoEdit = false), (estadoDelete = false)"
+    v-if="estadoEdit"
+  >
+    Cancelar
+  </button>
 </template>
 
 <script>
 import Navbar from "../components/Navbar";
+import EditConsulta from "../components/EditConsulta";
 import firebase from "firebase";
 
 export default {
   components: {
     Navbar,
+    EditConsulta,
   },
   created() {
     firebase
@@ -96,6 +109,7 @@ export default {
       arrayCitas: [],
       idDocumento: "",
       estadoDelete: false,
+      estadoEdit: false,
     };
   },
 };

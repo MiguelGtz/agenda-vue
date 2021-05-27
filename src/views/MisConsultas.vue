@@ -22,7 +22,7 @@
           <td>{{ cita.fecha }}</td>
           <td>{{ cita.hora }}</td>
           <td>
-            <button class="btn btn-primary mx-1" @click="editCita(cita.id)">
+            <button class="btn btn-primary mx-1" @click="idDocumento = cita.id">
               <i class="fas fa-edit"></i>
             </button>
             <button
@@ -89,9 +89,6 @@ export default {
         .collection("Citas")
         .doc(id)
         .delete();
-    },
-    restore() {
-      estadoDelete = false;
     },
   },
   data() {

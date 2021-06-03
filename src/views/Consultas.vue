@@ -1,6 +1,8 @@
 <template>
   <Navbar />
-  <NewConsulta />
+  <div class="contenedor p-5">
+    <NewConsulta />
+  </div>
 </template>
 
 <script>
@@ -15,4 +17,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.contenedor {
+  height: 100vh;
+  background-image: url("../assets/background-nueva-consulta.jpg");
+  background-size: cover;
+}
+</style>

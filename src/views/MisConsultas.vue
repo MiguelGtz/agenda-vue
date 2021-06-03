@@ -1,67 +1,62 @@
 <template>
   <Navbar />
-  <div class="container bg-light my-3 p-3" v-if="!estadoDelete && !estadoEdit">
-    <h1 class="h3 mb-3 font-weight-normal">Historial de Citas</h1>
-    <hr />
-    <table class="table">
-      <thead v-if="arrayCitas.length != 0">
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Asunto</th>
-          <th scope="col">Doctor</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Hora</th>
-          <th scope="col">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="cita in arrayCitas" :key="cita.id">
-          <td>{{ cita.nombre }}</td>
-          <td>{{ cita.asunto }}</td>
-          <td>{{ cita.doctor }}</td>
-          <td>{{ cita.fecha }}</td>
-          <td>{{ cita.hora }}</td>
-          <td>
-            <button
-              class="btn btn-primary mx-1"
-              @click="(estadoEdit = true), (idDocumento = cita.id)"
-            >
-              <i class="fas fa-edit"></i>
-            </button>
-            <button
-              class="btn btn-danger mx-1"
-              @click="(estadoDelete = true), (idDocumento = cita.id)"
-            >
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="h4" v-if="arrayCitas.length == 0">
-          <span>No hay citas!</span>
-        </tr>
-      </tbody>
-    </table>
+  <div class="contenedor p-5">
+    <div class="container bg-light p-3" v-if="!estadoDelete && !estadoEdit">
+      <h1 class="h3 mb-3 font-weight-normal">Historial de Citas</h1>
+      <hr />
+      <table class="table">
+        <thead v-if="arrayCitas.length != 0">
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Asunto</th>
+            <th scope="col">Doctor</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Hora</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="cita in arrayCitas" :key="cita.id">
+            <td>{{ cita.nombre }}</td>
+            <td>{{ cita.asunto }}</td>
+            <td>{{ cita.doctor }}</td>
+            <td>{{ cita.fecha }}</td>
+            <td>{{ cita.hora }}</td>
+            <td>
+              <button
+                class="btn btn-primary mx-1"
+                @click="(estadoEdit = true), (idDocumento = cita.id)"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button
+                class="btn btn-danger mx-1"
+                @click="(estadoDelete = true), (idDocumento = cita.id)"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+          <tr class="h4" v-if="arrayCitas.length == 0">
+            <span>No hay citas!</span>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <EditConsulta :idDocumento="idDocumento" v-if="estadoEdit" />
+    <div class="container alert alert-dark" v-if="estadoDelete">
+      <div><h5>¿Está seguro que desea eliminarlo?</h5></div>
+      <button
+        class="btn btn-danger mx-1"
+        @click="deleteCita(idDocumento), (estadoDelete = false)"
+      >
+        Eliminar
+      </button>
+      <button class="btn btn-primary mx-1" @click="estadoDelete = false">
+        Cancelar
+      </button>
+    </div>
   </div>
-  <EditConsulta :idDocumento="idDocumento" v-if="estadoEdit" />
-  <div class="container alert alert-dark my-3" v-if="estadoDelete">
-    <div><h5>¿Está seguro que desea eliminarlo?</h5></div>
-    <button
-      class="btn btn-danger mx-1"
-      @click="deleteCita(idDocumento), (estadoDelete = false)"
-    >
-      Eliminar
-    </button>
-    <button class="btn btn-primary mx-1" @click="estadoDelete = false">
-      Cancelar
-    </button>
-  </div>
-  <button
-    class="container btn btn-danger mx-1"
-    @click="(estadoEdit = false), (estadoDelete = false)"
-    v-if="estadoEdit"
-  >
-    Cancelar
-  </button>
 </template>
 
 <script>
@@ -118,5 +113,10 @@ export default {
 <style scoped>
 .bg-light {
   color: black;
+}
+.contenedor {
+  height: 100vh;
+  background-image: url("../assets/background-mis-consultas.jpg");
+  background-size: cover;
 }
 </style>

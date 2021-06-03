@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-light my-3 p-3">
+  <div class="container bg-light p-3">
     <h1 class="h3 mb-3 font-weight-normal">Editar Cita</h1>
     <hr />
     <form @submit.prevent="editarCita" class="form-signin">
@@ -63,6 +63,12 @@
         Aceptar
       </button>
     </form>
+    <button
+      class="container btn btn-danger my-2"
+      @click="($parent.estadoEdit = false), ($parent.estadoDelete = false)"
+    >
+      Cancelar
+    </button>
   </div>
   <div class="container alert alert-success mt-3" v-if="estadoAgregar">
     <span>Se ha editado la cita correctamente!</span>
@@ -150,7 +156,7 @@ export default {
             this.estadoAgregar = true;
             setTimeout(() => {
               this.estadoAgregar = false;
-              this.$router.replace("/misconsultas");
+              this.$parent.estadoEdit = false;
             }, 2000);
           })
           .catch(() => {

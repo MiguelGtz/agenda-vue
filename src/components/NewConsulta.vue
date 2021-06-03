@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-light my-3 p-3">
+  <div class="container bg-light p-3">
     <h1 class="h3 mb-3 font-weight-normal">Agendar Cita</h1>
     <hr />
     <form @submit.prevent="guardarCita" class="form-signin">

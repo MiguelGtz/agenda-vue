@@ -4,6 +4,7 @@ import Signup from "../views/Signup";
 import Home from "../views/Home";
 import Consultas from "../views/Consultas";
 import MisConsultas from "../views/MisConsultas";
+import Contacto from "../views/Contacto";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/misconsultas",
     name: "MisConsultas",
     component: MisConsultas,
+  },
+  {
+    path: "/contacto",
+    name: "Contacto",
+    component: Contacto,
   },
 ];
 

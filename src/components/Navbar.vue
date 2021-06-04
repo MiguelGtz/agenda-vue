@@ -17,6 +17,11 @@
                 >Mis Consultas</router-link
               >
             </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/contacto"
+                >Contacto</router-link
+              >
+            </li>
           </ul>
           <div class="d-flex">
             <button class="logout btn btn-danger" @click="logout">

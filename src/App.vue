@@ -16,7 +16,12 @@ export default {
         if (route.path != "/" && route.path != "/signup") {
           router.replace("/");
         }
-      } else if (route.path != "/home" && route.path != "/consultas" && route.path != "/misconsultas") {
+      } else if (
+        route.path != "/home" &&
+        route.path != "/consultas" &&
+        route.path != "/misconsultas" &&
+        route.path != "/contacto"
+      ) {
         router.replace("/home");
       }
     });
